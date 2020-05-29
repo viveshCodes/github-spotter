@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
+/*_____Imports from React Library________*/
+import React, { Component, Fragment } from 'react';
 import './App.css';
 
+/*______Import Custom Component_________*/
+import Navbar from './components/layout/Navbar';
+
+
+/*_______Component : App_________________*/
 class App extends Component {
 
   render(){
-
+  
     return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-          Github Spotter
-          </p>
-      
-        </header>
-      </div>
-    );// return
+      <Fragment>
+         <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
+      </Fragment>
+    );
 
-  } // render
+  } 
  
-} // App
+} 
 
 export default App;
 
