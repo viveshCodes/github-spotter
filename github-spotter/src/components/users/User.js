@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 /*______Import Custom Component________*/
 import UserItem from './UserItem';
@@ -19,6 +20,11 @@ const User = (props) => {
         )
     }
         
+}
+
+User.propTypes = {
+    users : PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired
 }
 
 const userStyle = {
