@@ -5,6 +5,8 @@ import axios from 'axios';
 /*______Import Custom Component_________*/
 import Navbar from './components/layout/Navbar';
 import User from './components/users/User';
+import Search from './components/users/Search';
+
 
 
 
@@ -31,6 +33,7 @@ class App extends Component {
     return (
       <Fragment>
          <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
+         <Search />
         <div className="container">
            <User loading={this.state.loading} users = {this.state.users}/>
         </div>
