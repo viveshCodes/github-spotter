@@ -17,23 +17,26 @@ class App extends Component {
     users : [],
     loading : false
   }
-  async componentDidMount(){
+ 
+  searchUsersFromGithub = async (text)=>{
     this.setState({loading: true});
     
-    const response = await axios.get(`https://api.github.com/users?client_id=
+    const githubHandle = text;
+
+    const response = await axios.get(`https://api.github.com/search/users?q=${githubHandle}&client_id=
     ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
     `);
 
-    this.setState({loading : false, users : response.data})
-
+    this.setState({loading : false, users : response.data.items})
   }
+  
   render(){
   
     return (
       <Fragment>
          <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
-         <Search />
+         <Search searchUsers={this.searchUsersFromGithub}/>
         <div className="container">
            <User loading={this.state.loading} users = {this.state.users}/>
         </div>
