@@ -30,15 +30,22 @@ class App extends Component {
 
     this.setState({loading : false, users : response.data.items})
   }
-  
+  clearUsers = () =>{
+
+    this.setState({users:[], loading:false});
+  }
   render(){
   
     return (
       <Fragment>
          <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
-         <Search searchUsers={this.searchUsersFromGithub}/>
+         <Search 
+              searchUsers={this.searchUsersFromGithub}
+              clearUsers = {this.clearUsers}
+              showClear={this.state.users.length > 0 ? true : false}
+         />
         <div className="container">
-           <User loading={this.state.loading} users = {this.state.users}/>
+           <User loading={this.state.loading} users = {this.state.users} />
         </div>
       </Fragment>
     );
