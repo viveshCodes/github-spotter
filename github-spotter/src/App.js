@@ -4,7 +4,8 @@ import './App.css';
 
 /*______Import Custom Component_________*/
 import Navbar from './components/layout/Navbar';
-import Useritem from './components/users/Useritem';
+import User from './components/users/User';
+
 
 
 
@@ -16,8 +17,9 @@ class App extends Component {
     return (
       <Fragment>
          <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
-
-         <Useritem />
+        <div className="container">
+           <User />
+        </div>
       </Fragment>
     );
 
