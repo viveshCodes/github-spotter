@@ -2,11 +2,13 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
 import axios from 'axios';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 /*______Import Custom Component_________*/
 import Navbar from './components/layout/Navbar';
 import User from './components/users/User';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
+import About from './components/pages/About';
 
 
 /*_______Component : App_________________*/
@@ -46,20 +48,34 @@ class App extends Component {
   render(){
   
     return (
-      <Fragment>
+        <Router>
+        <Fragment>
          <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
-        <Alert alert={this.state.alert} />
+         <Alert alert={this.state.alert} />
+      
+          <Switch>
 
-         <Search 
-              searchUsers={this.searchUsersFromGithub}
-              clearUsers = {this.clearUsers}
-              showClear={this.state.users.length > 0 ? true : false}
-              setAlert = {this.setAlertForEmptyUsername}
-         />
-        <div className="container">
-           <User loading={this.state.loading} users = {this.state.users} />
-        </div>
+            <Route exact path = '/' render={props=>(
+              <Fragment>
+                <Search 
+                      searchUsers={this.searchUsersFromGithub}
+                      clearUsers = {this.clearUsers}
+                      showClear={this.state.users.length > 0 ? true : false}
+                      setAlert = {this.setAlertForEmptyUsername}
+                  />
+                <div className="container">
+                  <User loading={this.state.loading} users = {this.state.users} />
+                </div>
+              </Fragment>
+          
+            )}/>
+           
+            <Route exact path = '/about' component={About} />
+
+          </Switch>
+        
       </Fragment>
+      </Router> 
     );
 
   } 
