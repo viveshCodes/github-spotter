@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 /*______Import Custom Component_________*/
 import Navbar from './components/layout/Navbar';
 import User from './components/users/User';
+import UserInfo from './components/users/UserInfo';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
@@ -15,6 +16,7 @@ import About from './components/pages/About';
 class App extends Component {
   state = {
     users : [],
+    userInfo :{},
     loading : false,
     alert : null
   }
@@ -31,6 +33,20 @@ class App extends Component {
 
     this.setState({loading : false, users : response.data.items})
   }
+
+  getUserInfo = async (username) =>{
+    this.setState({loading: true});
+    
+    const githubHandle = username;
+
+    const response = await axios.get(`https://api.github.com/users/${githubHandle}?client_id=
+    ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
+    ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
+    `);
+
+    this.setState({userInfo : response.data})
+  }
+
   clearUsers = () =>{
 
     this.setState({users:[], loading:false});
@@ -71,6 +87,10 @@ class App extends Component {
             )}/>
            
             <Route exact path = '/about' component={About} />
+
+             <Route exact path = '/userinfo/:login' render={props =>(
+                <UserInfo {...props} getUserInfo={this.getUserInfo} userInfo = {this.state.userInfo} loading = {this.state.loading}/>
+             )} />
 
           </Switch>
         
