@@ -52,13 +52,6 @@ const App =(props)=> {
 
   }
 
-
-  const clearUsers = () =>{
-
-    setUsers([]);
-    setLoading(false);
-  }
-
   const setAlertForEmptyUsername = (message , type ) =>{
     setAlert({msg : message, type : type});
 
@@ -80,8 +73,6 @@ const App =(props)=> {
             <Route exact path = '/' render={props=>(
               <Fragment>
                 <Search 
-                      clearUsers = {clearUsers}
-                      showClear={users.length > 0 ? true : false}
                       setAlert = {setAlertForEmptyUsername}
                   />
                 <div className="container">
