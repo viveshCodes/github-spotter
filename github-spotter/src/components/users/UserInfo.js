@@ -1,16 +1,15 @@
-import React, { Component, Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 
 import Repo from '../repos/Repo'
 
-class UserInfo extends Component {
-    componentDidMount(){
-        this.props.getUserInfo(this.props.match.params.login);
-        this.props.getRepos(this.props.match.params.login);
-    }
+const UserInfo = (props) => {
+    useEffect(()=>{
+        props.getUserInfo(props.match.params.login);
+        props.getRepos(props.match.params.login);
+    })
   
-    render() {
         const {
             name,
             avatar_url,
@@ -25,9 +24,9 @@ class UserInfo extends Component {
             public_gists,
             hireable,
             company
-        } = this.props.userInfo;
+        } = props.userInfo;
     
-        const {loading, repos} = this.props;
+        const {loading, repos} = props;
         if (loading) return <Spinner />;
 
         return (
@@ -98,6 +97,5 @@ class UserInfo extends Component {
                 <Repo repos={repos} />
             </Fragment>
         )
-    }
 }
 export default UserInfo
