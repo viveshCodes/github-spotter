@@ -10,7 +10,6 @@ import UserInfo from './components/users/UserInfo';
 import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
-
 import GithubState from './context/github/GithubState';
 /*_______Component : App_________________*/
 const App =(props)=> {
@@ -22,19 +21,7 @@ const App =(props)=> {
   const [repos, setRepos] = useState([]);
 
  
-  const searchUsersFromGithub = async (text)=>{
-    setLoading(true);
-    
-    const githubHandle = text;
-
-    const response = await axios.get(`https://api.github.com/search/users?q=${githubHandle}&client_id=
-    ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
-    ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
-    `);
-
-    setUsers(response.data.items);
-    setLoading(false);
-  }
+  
 
   const getUserInfo = async (username) =>{
     setLoading(true);
@@ -93,7 +80,6 @@ const App =(props)=> {
             <Route exact path = '/' render={props=>(
               <Fragment>
                 <Search 
-                      searchUsers={searchUsersFromGithub}
                       clearUsers = {clearUsers}
                       showClear={users.length > 0 ? true : false}
                       setAlert = {setAlertForEmptyUsername}
