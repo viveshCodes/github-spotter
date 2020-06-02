@@ -11,7 +11,7 @@ import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 
-
+import GithubState from './context/github/GithubState';
 /*_______Component : App_________________*/
 const App =(props)=> {
 
@@ -82,6 +82,7 @@ const App =(props)=> {
   }
   
     return (
+      <GithubState>
         <Router>
         <Fragment>
          <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
@@ -121,6 +122,7 @@ const App =(props)=> {
         
       </Fragment>
       </Router> 
+    </GithubState>  
     );
 
  
