@@ -1,5 +1,5 @@
 /*_____Imports from React Library________*/
-import React, { Component, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import './App.css';
 import axios from 'axios';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -13,17 +13,17 @@ import About from './components/pages/About';
 
 
 /*_______Component : App_________________*/
-class App extends Component {
-  state = {
-    users : [],
-    userInfo :{},
-    loading : false,
-    alert : null,
-    repos : []
-  }
+const App =(props)=> {
+
+  const [users, setUsers] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const [repos, setRepos] = useState([]);
+
  
-  searchUsersFromGithub = async (text)=>{
-    this.setState({loading: true});
+  const searchUsersFromGithub = async (text)=>{
+    setLoading(true);
     
     const githubHandle = text;
 
@@ -32,11 +32,12 @@ class App extends Component {
     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
     `);
 
-    this.setState({loading : false, users : response.data.items})
+    setUsers(response.data.items);
+    setLoading(false);
   }
 
-  getUserInfo = async (username) =>{
-    this.setState({loading: true});
+  const getUserInfo = async (username) =>{
+    setLoading(true);
     
     const githubHandle = username;
 
@@ -45,11 +46,12 @@ class App extends Component {
     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
     `);
 
-    this.setState({userInfo : response.data, loading:false})
+    setUserInfo(response.data); 
+    setLoading(false);
   }
 
-  getRepos = async (username) =>{
-    this.setState({loading: true});
+  const getRepos = async (username) =>{
+    setLoading(true);
     
     const githubHandle = username;
 
@@ -58,44 +60,45 @@ class App extends Component {
     ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
     `);
 
-    this.setState({repos : response.data, loading:false})
+    setRepos(response.data);
+    setLoading(false);
+
   }
 
 
-  clearUsers = () =>{
+  const clearUsers = () =>{
 
-    this.setState({users:[], loading:false});
+    setUsers([]);
+    setLoading(false);
   }
 
-  setAlertForEmptyUsername = (message , type ) =>{
-    this.setState({alert:{msg : message, type : type}});
+  const setAlertForEmptyUsername = (message , type ) =>{
+    setAlert({msg : message, type : type});
 
     setTimeout( () =>{
-      this.setState({alert:null})
+      setAlert(null)
     },2000);
 
   }
-
-  render(){
   
     return (
         <Router>
         <Fragment>
          <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
-         <Alert alert={this.state.alert} />
+         <Alert alert={alert} />
       
           <Switch>
 
             <Route exact path = '/' render={props=>(
               <Fragment>
                 <Search 
-                      searchUsers={this.searchUsersFromGithub}
-                      clearUsers = {this.clearUsers}
-                      showClear={this.state.users.length > 0 ? true : false}
-                      setAlert = {this.setAlertForEmptyUsername}
+                      searchUsers={searchUsersFromGithub}
+                      clearUsers = {clearUsers}
+                      showClear={users.length > 0 ? true : false}
+                      setAlert = {setAlertForEmptyUsername}
                   />
                 <div className="container">
-                  <User loading={this.state.loading} users = {this.state.users} />
+                  <User loading={loading} users = {users} />
                 </div>
               </Fragment>
           
@@ -106,11 +109,11 @@ class App extends Component {
              <Route exact path = '/userinfo/:login' render={props =>(
                 <UserInfo 
                   {...props} 
-                  getUserInfo={this.getUserInfo} 
-                  userInfo = {this.state.userInfo} 
-                  loading = {this.state.loading}
-                  getRepos = {this.getRepos}
-                  repos = {this.state.repos}
+                  getUserInfo={getUserInfo} 
+                  userInfo = {userInfo} 
+                  loading = {loading}
+                  getRepos = {getRepos}
+                  repos = {repos}
                 />
              )} />
 
@@ -120,7 +123,6 @@ class App extends Component {
       </Router> 
     );
 
-  } 
  
 } 
 

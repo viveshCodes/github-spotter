@@ -8,7 +8,7 @@ const UserInfo = (props) => {
     useEffect(()=>{
         props.getUserInfo(props.match.params.login);
         props.getRepos(props.match.params.login);
-    })
+    },[])
   
         const {
             name,
