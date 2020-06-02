@@ -8,7 +8,7 @@ import {
     SEARCH_USERS,
     SET_LOADING,
     CLEAR_USERS,
-    GET_USER,
+    GET_USERINFO,
     GET_REPOS
 } from '../types';
 
@@ -42,7 +42,23 @@ const GithubState = (props) =>{
     }
 
     // Get User Info
-
+    const getUserInfo = async (username) =>{
+        setLoading();
+        
+        const githubHandle = username;
+    
+        const response = await axios.get(`https://api.github.com/users/${githubHandle}?client_id=
+        ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
+        ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
+        `);
+    
+        dispatch({
+            type : GET_USERINFO,
+            payload : response.data
+        })
+       
+      }
+    
     // Get Repos
 
     // Clear Users
@@ -58,7 +74,8 @@ const GithubState = (props) =>{
                 repos : state.repos,
                 loading: state.loading,
                 searchUsers,
-                clearUsers
+                clearUsers,
+                getUserInfo
 
             }}
         >

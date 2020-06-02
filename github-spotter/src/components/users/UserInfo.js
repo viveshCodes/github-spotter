@@ -1,14 +1,19 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 
 import Repo from '../repos/Repo'
+import GithubContext from '../../context/github/githubContext';
 
 const UserInfo = (props) => {
+    const githubContext = useContext(GithubContext);
+    const {getUserInfo, loading, userInfo} = githubContext;
+
     useEffect(()=>{
-        props.getUserInfo(props.match.params.login);
+        getUserInfo(props.match.params.login);
         props.getRepos(props.match.params.login);
-    },[])
+    },[]);
+
   
         const {
             name,
@@ -24,9 +29,9 @@ const UserInfo = (props) => {
             public_gists,
             hireable,
             company
-        } = props.userInfo;
+        } = userInfo;
     
-        const {loading, repos} = props;
+        const {repos} = props;
         if (loading) return <Spinner />;
 
         return (

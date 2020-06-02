@@ -14,8 +14,7 @@ import GithubState from './context/github/GithubState';
 /*_______Component : App_________________*/
 const App =(props)=> {
 
-  const [users, setUsers] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
+
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
   const [repos, setRepos] = useState([]);
@@ -23,19 +22,6 @@ const App =(props)=> {
  
   
 
-  const getUserInfo = async (username) =>{
-    setLoading(true);
-    
-    const githubHandle = username;
-
-    const response = await axios.get(`https://api.github.com/users/${githubHandle}?client_id=
-    ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
-    ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
-    `);
-
-    setUserInfo(response.data); 
-    setLoading(false);
-  }
 
   const getRepos = async (username) =>{
     setLoading(true);
@@ -76,7 +62,7 @@ const App =(props)=> {
                       setAlert = {setAlertForEmptyUsername}
                   />
                 <div className="container">
-                  <User loading={loading} users = {users} />
+                  <User />
                 </div>
               </Fragment>
           
@@ -87,9 +73,7 @@ const App =(props)=> {
              <Route exact path = '/userinfo/:login' render={props =>(
                 <UserInfo 
                   {...props} 
-                  getUserInfo={getUserInfo} 
-                  userInfo = {userInfo} 
-                  loading = {loading}
+                
                   getRepos = {getRepos}
                   repos = {repos}
                 />
