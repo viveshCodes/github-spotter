@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import PropTypes from 'prop-types'
 
 /*______Import Custom Component________*/
 import UserItem from './UserItem';
