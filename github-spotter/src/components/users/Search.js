@@ -2,10 +2,12 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types'
 
 import GithubContext from '../../context/github/githubContext'
+import AlertContext from '../../context/alert/alertContext';
 
 const Search = (props) => {
 
     const githubContext = useContext(GithubContext);
+    const alertContext = useContext(AlertContext);
     
     const [text, setText] = useState('');
 
@@ -13,7 +15,7 @@ const Search = (props) => {
     const onSubmit = (event) =>{
         event.preventDefault();
         if(text === ''){
-             props.setAlert(' Enter GitHub Handle ', 'danger');
+             alertContext.setAlert(' Enter GitHub Handle ', 'danger');
         }else{
             githubContext.searchUsers(text);  // props up
             setText('');

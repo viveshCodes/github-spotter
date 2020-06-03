@@ -10,39 +10,29 @@ import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 import GithubState from './context/github/GithubState';
+import AlertState from './context/alert/AlertState';
+
 /*_______Component : App_________________*/
 const App =(props)=> {
-
-  const [alert, setAlert] = useState(null);
-
-
-
-  const setAlertForEmptyUsername = (message , type ) =>{
-    setAlert({msg : message, type : type});
-
-    setTimeout( () =>{
-      setAlert(null)
-    },2000);
-
-  }
   
     return (
       <GithubState>
+        <AlertState>
         <Router>
         <Fragment>
          <Navbar title = "GitHub Spotter"  icon = "fab fa-github" />
-         <Alert alert={alert} />
+         <Alert />
       
           <Switch>
 
             <Route exact path = '/' render={props=>(
               <Fragment>
-                <Search 
-                      setAlert = {setAlertForEmptyUsername}
-                  />
+                <Search />
+
                 <div className="container">
                   <User />
                 </div>
+
               </Fragment>
           
             )}/>
@@ -55,6 +45,7 @@ const App =(props)=> {
         
       </Fragment>
       </Router> 
+      </AlertState>
     </GithubState>  
     );
 
