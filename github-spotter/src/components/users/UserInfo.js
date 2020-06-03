@@ -7,11 +7,12 @@ import GithubContext from '../../context/github/githubContext';
 
 const UserInfo = (props) => {
     const githubContext = useContext(GithubContext);
-    const {getUserInfo, loading, userInfo} = githubContext;
+    
+    const {getUserInfo, loading, userInfo,getRepos, repos} = githubContext;
 
     useEffect(()=>{
         getUserInfo(props.match.params.login);
-        props.getRepos(props.match.params.login);
+        getRepos(props.match.params.login);
     },[]);
 
   
@@ -31,7 +32,6 @@ const UserInfo = (props) => {
             company
         } = userInfo;
     
-        const {repos} = props;
         if (loading) return <Spinner />;
 
         return (

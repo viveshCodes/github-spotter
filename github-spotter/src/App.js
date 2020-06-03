@@ -1,7 +1,6 @@
 /*_____Imports from React Library________*/
 import React, { useState, Fragment } from 'react';
 import './App.css';
-import axios from 'axios';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 /*______Import Custom Component_________*/
 import Navbar from './components/layout/Navbar';
@@ -14,29 +13,9 @@ import GithubState from './context/github/GithubState';
 /*_______Component : App_________________*/
 const App =(props)=> {
 
-
-  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
-  const [repos, setRepos] = useState([]);
-
- 
-  
 
 
-  const getRepos = async (username) =>{
-    setLoading(true);
-    
-    const githubHandle = username;
-
-    const response = await axios.get(`https://api.github.com/users/${githubHandle}/repos?per_page=5&sort=created:asc&client_id=
-    ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
-    ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}
-    `);
-
-    setRepos(response.data);
-    setLoading(false);
-
-  }
 
   const setAlertForEmptyUsername = (message , type ) =>{
     setAlert({msg : message, type : type});
@@ -70,14 +49,7 @@ const App =(props)=> {
            
             <Route exact path = '/about' component={About} />
 
-             <Route exact path = '/userinfo/:login' render={props =>(
-                <UserInfo 
-                  {...props} 
-                
-                  getRepos = {getRepos}
-                  repos = {repos}
-                />
-             )} />
+             <Route exact path = '/userinfo/:login' component={UserInfo} />
 
           </Switch>
         
